@@ -1,0 +1,33 @@
+package PackBanco;
+
+public class Loja {
+    private final Conta conta;
+    private final String nome;
+    private final Banco banco;
+    private double saldoParaPagarFuncionarios;
+
+    public Loja(String nome, Banco banco) {
+        this.nome = nome;
+        this.banco = banco;
+        this.conta = new Conta(nome, 0);
+        this.saldoParaPagarFuncionarios = 0;
+        banco.adicionarConta(conta);
+    }
+
+    public Conta getConta() {
+        return conta;
+    }
+
+    public synchronized void receberPagamento(double valor) {
+        banco.transferir(conta, conta, valor);
+        saldoParaPagarFuncionarios += valor;
+        if (saldoParaPagarFuncionarios >= 1400) {
+            saldoParaPagarFuncionarios -= 1400;
+            pagarFuncionarios();
+        }
+    }
+
+    private void pagarFuncionarios() {
+        System.out.println("Funcionários pagos pela loja " + nome);
+    }
+}

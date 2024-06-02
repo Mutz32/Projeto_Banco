@@ -1,0 +1,34 @@
+package PackBanco;
+
+public class Main {
+    public static void main(String[] args) {
+        Banco banco = new Banco();
+
+        Loja loja1 = new Loja("Loja 1", banco);
+        Loja loja2 = new Loja("Loja 2", banco);
+
+        Loja[] lojas = {loja1, loja2};
+
+        Funcionario funcionario1 = new Funcionario("Funcionario 1", loja1, banco);
+        Funcionario funcionario2 = new Funcionario("Funcionario 2", loja1, banco);
+        Funcionario funcionario3 = new Funcionario("Funcionario 3", loja2, banco);
+        Funcionario funcionario4 = new Funcionario("Funcionario 4", loja2, banco);
+
+        Cliente cliente1 = new Cliente("Cliente 1", banco, lojas);
+        Cliente cliente2 = new Cliente("Cliente 2", banco, lojas);
+        Cliente cliente3 = new Cliente("Cliente 3", banco, lojas);
+        Cliente cliente4 = new Cliente("Cliente 4", banco, lojas);
+        Cliente cliente5 = new Cliente("Cliente 5", banco, lojas);
+
+        funcionario1.start();
+        funcionario2.start();
+        funcionario3.start();
+        funcionario4.start();
+
+        cliente1.start();
+        cliente2.start();
+        cliente3.start();
+        cliente4.start();
+        cliente5.start();
+    }
+}

@@ -1,0 +1,32 @@
+package PackBanco;
+
+public class Cliente extends Thread {
+    private final Conta conta;
+    private final Banco banco;
+    private final Loja[] lojas;
+
+    public Cliente(String nome, Banco banco, Loja[] lojas) {
+        this.conta = new Conta(nome, 1000);
+        this.banco = banco;
+        this.lojas = lojas;
+        banco.adicionarConta(conta);
+    }
+
+    @Override
+    public void run() {
+        int lojaAtual = 0;
+        while (conta.getSaldo() > 0) {
+            double valorCompra = (Math.random() < 0.5) ? 100 : 200;
+            Loja loja = lojas[lojaAtual];
+            banco.transferir(conta, loja.getConta(), valorCompra);
+            loja.receberPagamento(valorCompra);
+            lojaAtual = (lojaAtual + 1) % lojas.length;
+            try {
+                Thread.sleep(1000); // Simula o tempo entre as compras
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+        System.out.println(conta.getTitular() + " terminou as compras.");
+    }
+}

@@ -1,0 +1,25 @@
+package PackBanco;
+
+import java.util.HashMap;
+import java.util.Map;
+
+public class Banco {
+    private final Map<String, Conta> contas = new HashMap<>();
+
+    public void adicionarConta(Conta conta) {
+        contas.put(conta.getTitular(), conta);
+    }
+
+    public Conta getConta(String titular) {
+        return contas.get(titular);
+    }
+
+    public synchronized void transferir(Conta origem, Conta destino, double valor) {
+        if (origem.debitar(valor)) {
+            destino.creditar(valor);
+            System.out.println("Transferência de R$ " + valor + " de " + origem.getTitular() + " para " + destino.getTitular());
+        } else {
+            System.out.println("Saldo insuficiente para transferência de " + origem.getTitular());
+        }
+    }
+}
